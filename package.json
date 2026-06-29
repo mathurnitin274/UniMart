@@ -1,0 +1,9 @@
+{
+  "name": "unimart",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix backend",
+    "start": "npm start --prefix backend",
+    "test": "npm test --prefix backend"
+  }
+}
