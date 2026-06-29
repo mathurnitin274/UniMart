@@ -13,8 +13,8 @@ let app;
 before(async () => {
   mongoServer = await MongoMemoryServer.create();
   process.env.MONGODB_URI = mongoServer.getUri();
+  await mongoose.connect(process.env.MONGODB_URI);
   app = require('../server');
-  await mongoose.connection.asPromise();
 });
 
 after(async () => {

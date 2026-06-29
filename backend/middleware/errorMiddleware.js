@@ -5,6 +5,7 @@ const notFound = (req, res, next) => {
 };
 
 const errorHandler = (err, req, res, next) => {
+  console.error('Error occurred in request:', err);
   let statusCode = err.statusCode || 500;
   let message = err.message || 'Internal server error';
 
