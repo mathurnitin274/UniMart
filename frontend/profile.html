@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile | UniMart</title>
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 32px;
+      margin-top: 24px;
+    }
+    .profile-card {
+      padding: 32px;
+      height: fit-content;
+      text-align: center;
+    }
+    .profile-avatar-large {
+      width: 110px;
+      height: 110px;
+      border-radius: var(--radius-full);
+      object-fit: cover;
+      border: 4px solid var(--primary);
+      margin: 0 auto 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .tabs-bar {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 12px 4px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+    }
+    .tab-btn:hover, .tab-btn.active {
+      color: var(--text);
+    }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--primary);
+    }
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+    /* Horizontal item layouts for management */
+    .profile-item-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .profile-item-row img {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+    }
+    @media (max-width: 800px) {
+      .profile-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="app-main">
+    <div class="profile-layout">
+      <!-- Left sidebar: Overview card -->
+      <aside class="glass-card profile-card">
+        <img id="profile-pic" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2NiZDVlMSI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg==" alt="Avatar" class="profile-avatar-large">
+        <h3 id="profile-name" style="font-size: 1.35rem; font-weight: 800; margin-bottom: 4px;">Loading...</h3>
+        <p id="profile-email" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">email@college.edu</p>
+        
+        <div style="background: var(--background); padding: 16px; border-radius: var(--radius-sm); font-size: 0.82rem; text-align: left; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px;">
+          <span>🏫 <strong id="profile-college-label">College:</strong> loading...</span>
+          <span>🎓 <strong id="profile-dept-label">Dept:</strong> loading...</span>
+          <span>📅 <strong id="profile-year-label">Year:</strong> loading...</span>
+          <span>📞 <strong id="profile-phone-label">Phone:</strong> loading...</span>
+        </div>
+
+        <!-- Customizer Slider on Profile -->
+        <div style="border-top: 1px solid var(--border); padding-top: 20px; text-align: left;">
+          <h4 style="font-size: 0.88rem; font-weight: 700; margin-bottom: 12px; text-transform: uppercase;">Aesthetic Themes</h4>
+          
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="form-label" style="font-size:0.8rem;">Light/Dark Theme</label>
+            <button class="btn btn-secondary" style="width:100%; font-size: 0.85rem;" id="profile-theme-toggle">Toggle Mode</button>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-size:0.8rem;">Brand Color Accent</label>
+            <input type="range" min="0" max="360" value="250" class="hue-slider" id="profile-hue-slider">
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right block: Tabs panel -->
+      <section class="glass-card" style="padding: 40px;">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-target="tab-my-listings">My Listings</button>
+          <button class="tab-btn" data-target="tab-my-wishlist">My Wishlist</button>
+          <button class="tab-btn" data-target="tab-settings">Account Settings</button>
+        </div>
+
+        <!-- Tab: My Listings -->
+        <div class="tab-pane active" id="tab-my-listings">
+          <div id="listings-loading" style="text-align: center; padding: 20px 0;">
+            <p style="color: var(--text-muted); font-size:0.9rem;">Fetching your listings...</p>
+          </div>
+          <div id="listings-empty" style="text-align: center; padding: 40px 16px; display: none;">
+            <p style="color: var(--text-muted); font-size:0.95rem;">You haven't listed any products yet.</p>
+            <a href="sell-product.html" class="btn btn-primary" style="margin-top: 12px; font-size:0.85rem;">+ Create First Listing</a>
+          </div>
+          <div id="my-listings-container" style="display: flex; flex-direction: column;">
+            <!-- User listings list -->
+          </div>
+        </div>
+
+        <!-- Tab: My Wishlist -->
+        <div class="tab-pane" id="tab-my-wishlist">
+          <div id="wishlist-loading" style="text-align: center; padding: 20px 0;">
+            <p style="color: var(--text-muted); font-size:0.9rem;">Fetching your wishlist...</p>
+          </div>
+          <div id="wishlist-empty" style="text-align: center; padding: 40px 16px; display: none;">
+            <p style="color: var(--text-muted); font-size:0.95rem;">Your wishlist is empty.</p>
+          </div>
+          <div id="my-wishlist-container" style="display: flex; flex-direction: column;">
+            <!-- User wishlist items -->
+          </div>
+        </div>
+
+        <!-- Tab: Settings Form -->
+        <div class="tab-pane" id="tab-settings">
+          <form id="settings-form">
+            <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Update Account Details</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settings-name" class="form-label">Full Name</label>
+                <input type="text" id="settings-name" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="settings-phone" class="form-label">Phone Number</label>
+                <input type="tel" id="settings-phone" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settings-college" class="form-label">College / University</label>
+                <input type="text" id="settings-college" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="settings-department" class="form-label">Department</label>
+                <input type="text" id="settings-department" class="form-control" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="settings-year" class="form-label">Academic Year</label>
+                <select id="settings-year" class="form-control" required>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                  <option value="Postgraduate">Postgraduate</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="settings-avatar" class="form-label">Avatar Profile Image URL</label>
+                <input type="url" id="settings-avatar" class="form-control">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="padding: 12px 24px; font-size: 0.95rem; margin-top: 10px;" id="save-settings-btn">
+              Save Profile Changes
+            </button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

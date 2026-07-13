@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace | UniMart</title>
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    .marketplace-container {
+      margin-top: 24px;
+    }
+
+
+    .wishlist-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      z-index: 2;
+    }
+    [data-theme="dark"] .wishlist-btn {
+      background: rgba(15, 15, 15, 0.6);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    .wishlist-btn:hover {
+      transform: scale(1.15);
+      background: rgba(255, 255, 255, 0.95);
+    }
+    [data-theme="dark"] .wishlist-btn:hover {
+      background: rgba(15, 15, 15, 0.85);
+    }
+    .wishlist-btn.active {
+      color: var(--danger);
+      background: rgba(255, 255, 255, 0.95);
+    }
+    [data-theme="dark"] .wishlist-btn.active {
+      background: rgba(15, 15, 15, 0.85);
+    }
+    .filter-section-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      color: var(--text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .filter-divider {
+      border-top: 1px solid var(--border);
+      margin: 20px 0;
+    }
+    .condition-pill-select {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cond-btn {
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 0.8rem;
+      font-weight: 550;
+      cursor: pointer;
+      transition: var(--transition);
+      color: var(--text-muted);
+    }
+    .cond-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    /* Redesigned Breadcrumbs */
+    .breadcrumb-nav {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .breadcrumb-nav a {
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .breadcrumb-nav a:hover {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .breadcrumb-separator {
+      color: var(--border);
+      font-weight: 400;
+    }
+
+    /* Redesigned Category Banner */
+    .category-banner {
+      background: linear-gradient(135deg, hsl(265, 80%, 55%) 0%, hsl(225, 80%, 55%) 100%);
+      padding: 20px 28px;
+      border-radius: var(--radius-md);
+      color: white;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: var(--shadow);
+    }
+    
+    .sort-select-pill {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      padding: 8px 36px 8px 16px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background-color: var(--surface);
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      transition: var(--transition);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 14px;
+    }
+    .sort-select-pill:hover {
+      border-color: var(--text-muted);
+      background-color: var(--surface-hover);
+    }
+    .sort-select-pill:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    /* Category Pill Row */
+    .category-pills-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    .category-pills-container {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      flex: 1;
+      margin-right: 16px;
+      min-width: 280px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .category-pills-container::-webkit-scrollbar {
+      display: none;
+    }
+    .category-pill {
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+    .category-pill:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+    }
+    .category-pill.active {
+      background: var(--primary-muted);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    [data-theme="dark"] .category-pill.active {
+      background: hsla(var(--primary-hue), var(--primary-saturation), var(--primary-lightness), 0.2);
+    }
+
+    .subcategory-pill {
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 550;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+    }
+    .subcategory-pill:hover {
+      color: var(--text);
+      border-color: var(--text-muted);
+    }
+    .subcategory-pill.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    [data-theme="dark"] .subcategory-pill.active {
+      background: var(--primary);
+      color: white;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="app-main">
+    <!-- Breadcrumb navigation -->
+    <nav class="breadcrumb-nav">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-separator">></span>
+      <a href="marketplace.html">Marketplace</a>
+      <span id="breadcrumb-category" style="display: none;">
+        <span class="breadcrumb-separator">></span>
+        <span id="breadcrumb-category-name" style="color: var(--text);">Category</span>
+      </span>
+    </nav>
+
+    <!-- Premium Gradient Hero Banner -->
+    <div class="category-banner">
+      <!-- Background glows -->
+      <div style="position: absolute; top: -20%; right: -10%; width: 320px; height: 320px; background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; pointer-events: none;"></div>
+      <div style="position: absolute; bottom: -30%; left: -5%; width: 260px; height: 260px; background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; pointer-events: none;"></div>
+      
+      <h1 id="banner-title" style="font-size: 2.0rem; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 6px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.1);">Campus Marketplace</h1>
+      <p id="banner-count" style="color: rgba(255, 255, 255, 0.9); font-weight: 500; font-size: 0.95rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+        <span id="banner-count-text">Loading listings...</span>
+      </p>
+      
+      <input type="hidden" id="search-input">
+    </div>
+
+    <!-- Category capsules row with Sort and Filters toggle -->
+    <div class="category-pills-row">
+      <div class="category-pills-container" id="category-pills-list">
+        <button class="category-pill active" data-category="">All Categories</button>
+        <button class="category-pill" data-category="Electronics">Electronics</button>
+        <button class="category-pill" data-category="Books">Books</button>
+        <button class="category-pill" data-category="Furniture">Furniture</button>
+        <button class="category-pill" data-category="Clothing">Clothing</button>
+        <button class="category-pill" data-category="Sports">Sports</button>
+        <button class="category-pill" data-category="Accessories">Accessories</button>
+        <button class="category-pill" data-category="Other">Other</button>
+      </div>
+      
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <span style="font-size: 0.88rem; color: var(--text-muted); font-weight: 600; white-space: nowrap;">Sort by</span>
+          <select id="sort-select" class="sort-select-pill">
+            <option value="newest">Newest First</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+          </select>
+        </div>
+
+        
+        <a href="sell-product.html" class="btn btn-primary" style="padding: 8px 18px; border-radius: var(--radius-full); font-weight: 600;">
+          + Sell Item
+        </a>
+      </div>
+    </div>
+
+    <!-- Subcategory pills row -->
+    <div id="subcategory-pills-row" class="category-pills-row" style="display: none; border-bottom: none; margin-top: -16px; padding-top: 0; padding-bottom: 12px; margin-bottom: 16px;">
+      <div class="category-pills-container" id="subcategory-pills-list">
+        <!-- Injected dynamically by JS -->
+      </div>
+    </div>
+
+    <div class="marketplace-container">
+
+      <!-- Products Grid & Listings -->
+      <section>
+        <div id="results-count" style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; display: none;">0 results found</div>
+        <div id="loading-state" style="text-align: center; padding: 60px 0; display: none;">
+          <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px;"></div>
+          <p style="color: var(--text-muted);">Fetching awesome listings...</p>
+        </div>
+
+        <div id="empty-state" style="text-align: center; padding: 80px 24px; display: none;" class="glass-card">
+          <span style="font-size: 3rem; margin-bottom: 16px; display: block;">🎒</span>
+          <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">No listings found</h3>
+          <p style="color: var(--text-muted); margin-bottom: 24px; max-width: 400px; margin-left: auto; margin-right: auto;">Try adjusting your filters or search terms to find what you are looking for.</p>
+          <button id="reset-filters-empty-btn" class="btn btn-primary">Reset Filters</button>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+          <!-- Card content injected dynamically -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/marketplace.js"></script>
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</body>
+</html>

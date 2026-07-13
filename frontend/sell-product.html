@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List an Item | UniMart</title>
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    .sell-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: start;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    @media (max-width: 992px) {
+      .sell-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .preview-sidebar {
+        position: static !important;
+        margin-bottom: 24px;
+      }
+    }
+    .preview-sidebar {
+      position: sticky;
+      top: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .image-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .image-preview-card {
+      width: 100%;
+      height: 100px;
+      border-radius: var(--radius-sm);
+      border: 2px dashed var(--border);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--background);
+    }
+    .image-preview-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .remove-image-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+    }
+    .ai-btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+    .ai-bubble {
+      background: hsla(var(--primary-hue), var(--primary-saturation), var(--primary-lightness), 0.1);
+      border: 1px solid var(--primary);
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="app-main">
+    <div class="sell-layout">
+      <!-- Left Column: Form -->
+      <div>
+        <div style="margin-bottom: 24px;">
+          <h1 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px;">List an Item for Sale</h1>
+          <p style="color: var(--text-muted);">Fill in the details to list your product in the student marketplace</p>
+        </div>
+
+      <form id="sell-form" class="glass-card" style="padding: 40px; margin-bottom: 40px;">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="title" class="form-label">Item Title*</label>
+            <input type="text" id="title" class="form-control" placeholder="e.g. Dell Inspiron 15 Laptop" required>
+          </div>
+          <div class="form-group">
+            <label for="price" class="form-label">Price (INR)*</label>
+            <input type="number" id="price" class="form-control" placeholder="e.g. 25000" min="0" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="category" class="form-label">Category*</label>
+            <select id="category" class="form-control" required>
+              <option value="" disabled selected>Select Category</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Books">Books</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Sports">Sports</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="condition" class="form-label">Condition*</label>
+            <select id="condition" class="form-control" required>
+              <option value="" disabled selected>Select Condition</option>
+              <option value="New">New</option>
+              <option value="Like New">Like New</option>
+              <option value="Good">Good</option>
+              <option value="Fair">Fair</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" id="subcategory-wrapper" style="display: none; margin-bottom: 20px;">
+          <label for="subcategory" class="form-label">Subcategory*</label>
+          <select id="subcategory" class="form-control">
+            <option value="" disabled selected>Select Subcategory</option>
+          </select>
+        </div>
+
+        <!-- Custom Campus Specifications -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dorm" class="form-label">Location (College / Area / Proximity)*</label>
+            <input type="text" id="dorm" class="form-control" placeholder="e.g. State College, North Campus or Hostel A" required>
+          </div>
+          <div class="form-group">
+            <label for="courseCode" class="form-label">Course Code (For Textbooks/Notes)</label>
+            <input type="text" id="courseCode" class="form-control" placeholder="e.g. CS101 (Optional)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="specifications" class="form-label">General Specifications / Usage Duration</label>
+          <input type="text" id="specifications" class="form-control" placeholder="e.g. Brand: Dell, RAM: 16GB, Used: 1.5 Years">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer;">
+            <input type="checkbox" id="swap-checkbox" style="width: 18px; height: 18px; accent-color: var(--primary);">
+            <span>Willing to swap/trade this item for another item?</span>
+          </label>
+        </div>
+
+        <!-- AI Assistant Tools -->
+        <div>
+          <label class="form-label">AI Listing Assistant</label>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">Autofill description and refine category suggestions using Gemini AI</p>
+          <div class="ai-btn-group">
+            <button type="button" id="ai-generate-desc-btn" class="btn btn-secondary" style="border-color: var(--primary); color: var(--primary); font-size: 0.85rem;">
+              ✨ Generate AI Description
+            </button>
+            <button type="button" id="ai-suggest-pricing-btn" class="btn btn-secondary" style="border-color: var(--primary); color: var(--primary); font-size: 0.85rem;">
+              💰 Suggest Price & Category
+            </button>
+          </div>
+          <div class="ai-bubble" id="ai-suggestion-box">
+            <!-- Render suggestions -->
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description" class="form-label">Product Description*</label>
+          <textarea id="description" class="form-control" style="height: 150px; resize: vertical;" placeholder="Tell buyers about your item (features, flaws, warranty etc.)..." required></textarea>
+        </div>
+
+        <!-- Image Upload (Max 5) -->
+        <div class="form-group">
+          <label class="form-label">Product Images* (Max 5)</label>
+          <input type="file" id="image-files" accept="image/png, image/jpeg, image/webp" multiple style="display: none;">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('image-files').click()">
+            📸 Select Images
+          </button>
+          <div class="image-preview-grid" id="image-preview-grid">
+            <!-- Placed cards -->
+            <div class="image-preview-card"><span style="color:var(--text-muted); font-size: 0.85rem;">Slot 1</span></div>
+            <div class="image-preview-card"><span style="color:var(--text-muted); font-size: 0.85rem;">Slot 2</span></div>
+            <div class="image-preview-card"><span style="color:var(--text-muted); font-size: 0.85rem;">Slot 3</span></div>
+            <div class="image-preview-card"><span style="color:var(--text-muted); font-size: 0.85rem;">Slot 4</span></div>
+            <div class="image-preview-card"><span style="color:var(--text-muted); font-size: 0.85rem;">Slot 5</span></div>
+          </div>
+        </div>
+
+        <button type="submit" id="submit-listing-btn" class="btn btn-primary" style="width: 100%; padding: 14px; margin-top: 24px; font-size: 1.1rem; border-radius: var(--radius-sm);">
+          Publish Listing
+        </button>
+        </form>
+      </div>
+
+      <!-- Right Column: Sticky Live Preview -->
+      <div class="preview-sidebar">
+        <h3 style="font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 8px;">Live Listing Preview</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -8px; margin-bottom: 16px;">This is how your product will appear to other students in the marketplace.</p>
+        
+        <div class="glass-card product-card" style="width: 100%; max-width: 320px; margin: 0 auto;">
+          <div style="overflow:hidden; height:200px; background:var(--surface-hover); position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-bottom: 1px solid var(--border);">
+            <img id="prev-img" class="product-card-img" src="" alt="Preview Image" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+            <div id="prev-img-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted);">
+              <svg style="width: 40px; height: 40px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;" viewBox="0 0 24 24">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+              <span style="font-size: 0.8rem; font-weight: 600;">No image uploaded</span>
+            </div>
+          </div>
+          <div style="padding:16px; display:flex; flex-direction:column; gap:8px;">
+            <h4 id="prev-title" style="font-weight:700; font-size:1.05rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Your Product Title</h4>
+            <p id="prev-price" style="font-size:1.2rem; font-weight:800; color:var(--primary); margin: 2px 0 6px 0;">INR 0</p>
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--text-muted); border-top:1px solid var(--border); padding-top:8px; margin-top:auto;">
+              <span id="prev-location">📍 Location</span>
+              <span>🕒 Just now</span>
+            </div>
+
+            <div style="display:flex; margin-top:4px;">
+              <span id="prev-tag" style="background:var(--surface-hover); color:var(--text-muted); font-size:0.75rem; font-weight:600; padding:4px 10px; border-radius:var(--radius-sm); border:1px solid var(--border);">
+                Category
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/sell-product.js"></script>
+</body>
+</html>

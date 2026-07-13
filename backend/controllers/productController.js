@@ -10,6 +10,7 @@ const buildProductFilter = (query) => {
     filter.$text = { $search: query.q };
   }
   if (query.category) filter.category = query.category;
+  if (query.subcategory) filter.subcategory = query.subcategory;
   if (query.condition) filter.condition = query.condition;
   if (query.status) {
     filter.status = query.status;
@@ -74,7 +75,7 @@ const getProduct = asyncHandler(async (req, res) => {
 // @desc    Create product
 // @route   POST /api/products
 const createProduct = asyncHandler(async (req, res) => {
-  const { title, description, category, price, condition, specifications } = req.body;
+  const { title, description, category, price, condition, specifications, subcategory } = req.body;
 
   let images = [];
   if (req.files?.length) {
@@ -88,6 +89,7 @@ const createProduct = asyncHandler(async (req, res) => {
     price: Number(price),
     condition,
     specifications,
+    subcategory,
     images,
     sellerId: req.user._id,
   });
@@ -113,7 +115,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     throw new ApiError(403, 'Not authorized to update this product');
   }
 
-  const { title, description, category, price, condition, specifications, status } = req.body;
+  const { title, description, category, price, condition, specifications, status, subcategory } = req.body;
 
   if (title !== undefined) product.title = title;
   if (description !== undefined) product.description = description;
@@ -121,6 +123,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   if (price !== undefined) product.price = Number(price);
   if (condition !== undefined) product.condition = condition;
   if (specifications !== undefined) product.specifications = specifications;
+  if (subcategory !== undefined) product.subcategory = subcategory;
   if (status !== undefined && (isOwner || req.user.role === 'admin')) {
     product.status = status;
   }

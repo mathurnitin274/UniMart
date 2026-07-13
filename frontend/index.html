@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniMart | AI-Powered Campus Marketplace</title>
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    .hero-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      margin-bottom: 56px;
+      background: linear-gradient(135deg, 
+        hsla(var(--primary-hue), var(--primary-saturation), var(--primary-lightness), 0.08) 0%, 
+        hsla(calc(var(--primary-hue) + 40), var(--primary-saturation), var(--primary-lightness), 0.04) 100%
+      );
+      border: 1px solid var(--border);
+    }
+    .hero-title {
+      font-size: 3.4rem;
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      max-width: 800px;
+    }
+    .hero-title span {
+      background: linear-gradient(to right, var(--primary), hsl(calc(var(--primary-hue) + 40), 85%, 55%));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+    .feature-card {
+      padding: 32px;
+      text-align: left;
+    }
+    .feature-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+    .category-card {
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .category-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .category-icon {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.4rem;
+      }
+      .hero-desc {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+
+
+  <main class="app-main">
+    <!-- Clean Compact Welcome Banner -->
+    <div class="hero-section glass-card" style="padding: 40px 24px; margin-bottom: 40px; text-align: center;">
+      <span class="badge" style="background: var(--primary-muted); color: var(--primary); font-weight: 700; margin-bottom: 12px; letter-spacing: 0.05em; padding: 4px 12px;">Campus Marketplace</span>
+      <h1 style="font-size: 2.2rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 10px;">The College Marketplace for Verified Students</h1>
+      <p style="color: var(--text-muted); font-size: 1rem; max-width: 600px; margin: 0 auto;">Buy, sell, and swap items with classmates on your campus securely.</p>
+    </div>
+
+    <!-- Redesigned Premium Category Grid (OLX Style but Unique) -->
+    <h3 style="font-size: 1.4rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 24px;">Browse Categories</h3>
+    <div class="category-grid-premium">
+      <!-- Electronics -->
+      <div class="category-card-premium" onclick="window.location.href='marketplace.html?category=Electronics'">
+        <div class="category-card-icon-wrapper">
+          <svg class="category-svg" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="12" rx="2"></rect>
+            <line x1="2" y1="20" x2="22" y2="20"></line>
+            <rect x="15" y="8" width="5" height="9" rx="1" fill="var(--surface)"></rect>
+            <circle cx="17.5" cy="15" r="0.5" fill="currentColor"></circle>
+          </svg>
+        </div>
+        <span class="category-card-label">Electronics</span>
+      </div>
+
+      <!-- Books -->
+      <div class="category-card-premium" onclick="window.location.href='marketplace.html?category=Books'">
+        <div class="category-card-icon-wrapper">
+          <svg class="category-svg" viewBox="0 0 24 24">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" fill="none"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" fill="none"></path>
+            <line x1="8" y1="6" x2="16" y2="6"></line>
+            <line x1="8" y1="10" x2="16" y2="10"></line>
+          </svg>
+        </div>
+        <span class="category-card-label">Books</span>
+      </div>
+
+      <!-- Furniture -->
+      <div class="category-card-premium" onclick="window.location.href='marketplace.html?category=Furniture'">
+        <div class="category-card-icon-wrapper">
+          <svg class="category-svg" viewBox="0 0 24 24">
+            <path d="M19 10V18H5V10" fill="none"></path>
+            <path d="M21 14v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" fill="none"></path>
+            <path d="M4 10h16a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" fill="none"></path>
+            <path d="M8 6h8v4H8z" fill="none"></path>
+          </svg>
+        </div>
+        <span class="category-card-label">Furniture</span>
+      </div>
+
+      <!-- Clothing -->
+      <div class="category-card-premium" onclick="window.location.href='marketplace.html?category=Clothing'">
+        <div class="category-card-icon-wrapper">
+          <svg class="category-svg" viewBox="0 0 24 24">
+            <path d="M12 2a3 3 0 0 0-3 3h2a1 1 0 0 1 2 0 1 1 0 0 1-1 1v2" fill="none"></path>
+            <path d="M2 17l10-9 10 9H2z" fill="none"></path>
+            <line x1="6" y1="17" x2="18" y2="17"></line>
+          </svg>
+        </div>
+        <span class="category-card-label">Clothing</span>
+      </div>
+
+      <!-- Sports -->
+      <div class="category-card-premium" onclick="window.location.href='marketplace.html?category=Sports'">
+        <div class="category-card-icon-wrapper">
+          <svg class="category-svg" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="none"></circle>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+          </svg>
+        </div>
+        <span class="category-card-label">Sports & Hobbies</span>
+      </div>
+
+      <!-- Accessories -->
+      <div class="category-card-premium" onclick="window.location.href='marketplace.html?category=Accessories'">
+        <div class="category-card-icon-wrapper">
+          <svg class="category-svg" viewBox="0 0 24 24">
+            <path d="M18 9H6a3 3 0 0 0-3 3v2a3 3 0 0 0 6 0v-2h6v2a3 3 0 0 0 6 0v-2a3 3 0 0 0-3-3z" fill="none"></path>
+            <path d="M9 12h6"></path>
+          </svg>
+        </div>
+        <span class="category-card-label">Accessories</span>
+      </div>
+
+      <!-- Other -->
+      <div class="category-card-premium" onclick="window.location.href='marketplace.html?category=Other'">
+        <div class="category-card-icon-wrapper">
+          <svg class="category-svg" viewBox="0 0 24 24">
+            <polyline points="22,12 16,12 14,15 10,15 8,12 2,12" fill="none"></polyline>
+            <path d="M5.4 3h13.2l3.4 9H2L5.4 3z" fill="none"></path>
+            <rect x="2" y="12" width="20" height="9" rx="1" fill="none"></rect>
+          </svg>
+        </div>
+        <span class="category-card-label">Other</span>
+      </div>
+    </div>
+
+    <!-- Fresh Recommendations Section (Recent Listings style) -->
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:24px; border-bottom:1px solid var(--border); padding-bottom:16px;">
+      <div>
+        <h2 style="font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; color: var(--text);">Recent Listings</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin: 0; font-weight: 500;">Fresh items just posted</p>
+      </div>
+      <a href="marketplace.html" style="color: var(--primary); font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 4px; text-decoration: none; transition: var(--transition);">
+        View All <span style="font-weight: 700; font-size: 1.1rem; line-height: 1;">&rsaquo;</span>
+      </a>
+    </div>
+
+    <div id="home-loading" style="text-align: center; padding: 40px 0;">
+      <p style="color: var(--text-muted); font-size:0.9rem;">Fetching latest posts...</p>
+    </div>
+    
+    <div class="products-grid" id="home-products-grid">
+      <!-- Injected dynamically -->
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const grid = document.getElementById('home-products-grid');
+      const loader = document.getElementById('home-loading');
+      
+      try {
+        const res = await API.products.getAll({ limit: 8, status: 'available' });
+        loader.style.display = 'none';
+        
+        if (res.success && res.data && res.data.length > 0) {
+          function getRelativeTime(dateString) {
+            if (!dateString) return 'Just now';
+            const now = new Date();
+            const date = new Date(dateString);
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMins / 60);
+            const diffDays = Math.floor(diffHours / 24);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            if (diffDays === 1) return 'Yesterday';
+            if (diffDays < 30) return `${diffDays}d ago`;
+            return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+          }
+
+          grid.innerHTML = res.data.map(prod => {
+            // Decode specifications JSON
+            let specObj = {};
+            try {
+              if (prod.specifications && prod.specifications.startsWith('{')) {
+                specObj = JSON.parse(prod.specifications);
+              }
+            } catch(e) {}
+
+            const dorm = specObj.dorm || '';
+            const mainImg = prod.images && prod.images.length > 0 
+              ? prod.images[0].url 
+              : 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&auto=format&fit=crop&q=60';
+            
+            const timeString = getRelativeTime(prod.createdAt);
+
+            return `
+              <div class="glass-card product-card" onclick="window.location.href='product-details.html?id=${prod._id}'" style="cursor:pointer; display:flex; flex-direction:column;">
+                <div style="overflow:hidden; height:200px; background:var(--border);">
+                  <img class="product-card-img" src="${mainImg}" alt="${prod.title}">
+                </div>
+                <div style="padding:16px; flex:1; display:flex; flex-direction:column; gap:8px;">
+                  <h4 style="font-weight:700; font-size:1.05rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${prod.title}">${prod.title}</h4>
+                  <p style="font-size:1.2rem; font-weight:800; color:var(--primary); margin: 2px 0 6px 0;">INR ${prod.price.toLocaleString()}</p>
+                  
+                  <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:var(--text-muted); border-top:1px solid var(--border); padding-top:8px; margin-top:auto; flex-wrap:wrap; gap:4px;">
+                    <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:140px;">📍 ${dorm || 'Campus'}</span>
+                    <span>🕒 ${timeString}</span>
+                  </div>
+
+                  <div style="display:flex; margin-top:4px;">
+                    <span style="background:var(--surface-hover); color:var(--text-muted); font-size:0.75rem; font-weight:600; padding:4px 10px; border-radius:var(--radius-sm); border:1px solid var(--border);">
+                      ${prod.subcategory || prod.category}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color:var(--text-muted);">No products listed yet. Be the first to post!</div>';
+        }
+      } catch(err) {
+        loader.style.display = 'none';
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color:var(--danger);">Failed to load recent posts</div>';
+      }
+    });
+  </script>
+</body>
+</html>

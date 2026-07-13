@@ -62,6 +62,11 @@ const productSchema = new mongoose.Schema(
       enum: STATUSES,
       default: 'available',
     },
+    subcategory: {
+      type: String,
+      trim: true,
+      default: '',
+    },
   },
   { timestamps: true }
 );

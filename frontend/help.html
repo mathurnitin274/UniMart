@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniMart | Help Center & Safety</title>
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    .help-header {
+      text-align: center;
+      padding: 48px 24px;
+      margin-bottom: 32px;
+      background: linear-gradient(135deg, 
+        hsla(var(--primary-hue), var(--primary-saturation), var(--primary-lightness), 0.08) 0%, 
+        hsla(calc(var(--primary-hue) + 40), var(--primary-saturation), var(--primary-lightness), 0.04) 100%
+      );
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .help-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .help-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .help-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+    .faq-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .faq-question {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      user-select: none;
+    }
+    .faq-question:hover {
+      background: var(--surface-hover);
+    }
+    .faq-arrow {
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+      color: var(--primary);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      background: var(--background);
+      border-top: 1px solid transparent;
+    }
+    .faq-answer-inner {
+      padding: 20px 24px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .faq-card.active {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .faq-card.active .faq-arrow {
+      transform: rotate(180deg);
+    }
+    .faq-card.active .faq-answer {
+      max-height: 250px; /* Bounded height for animation */
+      border-top-color: var(--border);
+    }
+    
+    .safety-sidebar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 30px;
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+      box-shadow: var(--shadow-sm);
+    }
+    .safety-sidebar h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .safety-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .safety-item {
+      display: flex;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .safety-icon {
+      font-size: 1.1rem;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    
+    @media (max-width: 900px) {
+      .help-container {
+        grid-template-columns: 1fr;
+      }
+      .safety-sidebar {
+        position: relative;
+        top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="app-main">
+    <div class="help-header">
+      <h1 class="help-title">Help Center & FAQ</h1>
+      <p class="help-subtitle">Need assistance? Learn how to navigate UniMart and transact safely on campus.</p>
+    </div>
+
+    <div class="help-container">
+      <!-- FAQ Accordions -->
+      <div class="faq-section">
+        <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: var(--text);">Frequently Asked Questions</h2>
+        
+        <!-- FAQ 1 -->
+        <div class="faq-card">
+          <div class="faq-question">
+            <span>How do I search for items available in my hostel block?</span>
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              You can search for specific hostel blocks by clicking the 📍 <strong>Location Selector</strong> in the top navigation bar. Simply click on a popular campus area (e.g., Hostel A, Hostel B, Tech Park) or search for your block in the dropdown card. The marketplace will automatically filter listings matching that location.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-card">
+          <div class="faq-question">
+            <span>Is my student registration verified?</span>
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes! To keep UniMart safe for everyone, only students with verified institution registration are allowed to post items or message sellers. Upon signing up, registration checks are made against university enrollments.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-card">
+          <div class="faq-question">
+            <span>How does the AI Price Suggestion & Description Generator work?</span>
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              When listing a new item, click the <strong>Generate with Gemini AI</strong> button after entering the product title, condition, and key specifications. Our integrated AI will generate a professional, optimized product description and recommend a fair pricing range based on current campus market trends.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-card">
+          <div class="faq-question">
+            <span>How do I contact a seller to purchase an item?</span>
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Simply navigate to any product details page and click the <strong>Chat with Seller</strong> button. This opens a secure, real-time message thread where you can discuss the item, negotiate, and coordinate a safe meeting spot to exchange the product.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-card">
+          <div class="faq-question">
+            <span>What do I do if I find a suspicious or prohibited item listing?</span>
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              If you come across a listing that violates UniMart guidelines (e.g., illegal items, fake listings, harassment, or non-students), please click the <strong>Report a Listing</strong> link in the footer, select the item, and describe the issue. Our administration panel monitors reports and takes down listings immediately.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Safety Sidebar -->
+      <div class="safety-sidebar" id="safety">
+        <h3>🛡️ Campus Safety Guide</h3>
+        <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px; line-height:1.5;">
+          Your safety is our top priority. Please adhere to these guidelines for all campus meetups:
+        </p>
+        <ul class="safety-list">
+          <li class="safety-item">
+            <span class="safety-icon">📍</span>
+            <div>
+              <strong>Public Meeting Spots</strong><br>
+              Always meet in highly populated, well-lit campus areas. Ideal locations include the library lobby, central canteen, or the main academic quad.
+            </div>
+          </li>
+          <li class="safety-item">
+            <span class="safety-icon">👁️</span>
+            <div>
+              <strong>Inspect Before Paying</strong><br>
+              Examine the item thoroughly in person before making any transaction. Test electronics, flip through books, and verify product conditions.
+            </div>
+          </li>
+          <li class="safety-item">
+            <span class="safety-icon">💸</span>
+            <div>
+              <strong>No Advanced Payments</strong><br>
+              Never transfer money online to a buyer or seller before receiving and verifying the product in person. Beware of prepay requests.
+            </div>
+          </li>
+          <li class="safety-item">
+            <span class="safety-icon">👥</span>
+            <div>
+              <strong>Bring a Peer</strong><br>
+              If you are purchasing a high-value item (like a laptop or cycle), consider bringing a classmate or hostel roommate along to the transaction.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Manage accordions
+      const faqCards = document.querySelectorAll('.faq-card');
+      
+      faqCards.forEach(card => {
+        const question = card.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+          const isActive = card.classList.contains('active');
+          
+          // Collapse others
+          faqCards.forEach(c => {
+            c.classList.remove('active');
+          });
+          
+          if (!isActive) {
+            card.classList.add('active');
+          }
+        });
+      });
+
+      // Handle hashtag scroll to safety
+      if (window.location.hash === '#safety') {
+        setTimeout(() => {
+          const el = document.getElementById('safety');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      }
+    });
+  </script>
+</body>
+</html>

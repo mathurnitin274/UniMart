@@ -1,9 +1,15 @@
 const cloudinary = require('../config/cloudinary');
 const ApiError = require('../utils/ApiError');
 
-const uploadImage = async (buffer, folder = 'unimart') => {
+const uploadImage = async (file, folder = 'unimart') => {
   if (!process.env.CLOUDINARY_CLOUD_NAME) {
-    throw new ApiError(503, 'Image upload service is not configured');
+    console.warn('Cloudinary not configured. Using base64 Data URL for local development.');
+    const base64 = file.buffer.toString('base64');
+    const dataUrl = `data:${file.mimetype};base64,${base64}`;
+    return {
+      url: dataUrl,
+      publicId: `mock_cloudinary_id_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+    };
   }
 
   return new Promise((resolve, reject) => {
@@ -14,13 +20,13 @@ const uploadImage = async (buffer, folder = 'unimart') => {
         resolve({ url: result.secure_url, publicId: result.public_id });
       }
     );
-    stream.end(buffer);
+    stream.end(file.buffer);
   });
 };
 
 const uploadImages = async (files, folder = 'unimart/products') => {
   if (!files || files.length === 0) return [];
-  return Promise.all(files.map((file) => uploadImage(file.buffer, folder)));
+  return Promise.all(files.map((file) => uploadImage(file, folder)));
 };
 
 const deleteImage = async (publicId) => {

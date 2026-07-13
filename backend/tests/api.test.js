@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const request = require('supertest');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
+const Otp = require('../models/Otp');
 
 process.env.JWT_SECRET = 'test-secret-key-for-unimart';
 process.env.JWT_EXPIRES_IN = '1d';
@@ -36,7 +37,15 @@ describe('UniMart API', () => {
     assert.equal(res.body.success, true);
   });
 
-  it('POST /api/auth/register creates user', async () => {
+  it('POST /api/auth/register creates user with valid OTP', async () => {
+    await request(app).post('/api/auth/otp/send').send({
+      email: 'test@college.edu',
+      phone: '9876543210',
+    });
+
+    const otpRecord = await Otp.findOne({ target: '9876543210' });
+    assert.ok(otpRecord);
+
     const res = await request(app).post('/api/auth/register').send({
       name: 'Test User',
       email: 'test@college.edu',
@@ -45,6 +54,7 @@ describe('UniMart API', () => {
       department: 'CS',
       year: '3rd',
       phone: '9876543210',
+      otp: otpRecord.otp,
     });
 
     assert.equal(res.status, 201);
@@ -53,13 +63,74 @@ describe('UniMart API', () => {
     userId = res.body.data.user.id;
   });
 
-  it('POST /api/auth/login returns token', async () => {
-    const res = await request(app).post('/api/auth/login').send({
+  it('POST /api/auth/login initiates OTP, verify completes login', async () => {
+    const loginRes = await request(app).post('/api/auth/login').send({
       email: 'test@college.edu',
       password: 'secret123',
     });
 
+    assert.equal(loginRes.status, 200);
+    assert.equal(loginRes.body.requiresOTP, true);
+
+    const otpRecord = await Otp.findOne({ target: 'test@college.edu' });
+    assert.ok(otpRecord);
+
+    const verifyRes = await request(app).post('/api/auth/login/verify').send({
+      email: 'test@college.edu',
+      otp: otpRecord.otp,
+    });
+
+    assert.equal(verifyRes.status, 200);
+    assert.ok(verifyRes.body.data.token);
+  });
+
+  it('POST /api/auth/google registers a new user with mock token (requires OTP)', async () => {
+    const initRes = await request(app).post('/api/auth/google').send({
+      email: 'newgoogle@college.edu',
+      name: 'New Google User',
+      idToken: 'mock_token_newgoogle@college.edu'
+    });
+    assert.equal(initRes.status, 200);
+    assert.equal(initRes.body.requiresOTP, true);
+
+    const otpRecord = await Otp.findOne({ target: 'newgoogle@college.edu' });
+    assert.ok(otpRecord);
+
+    const res = await request(app).post('/api/auth/google').send({
+      email: 'newgoogle@college.edu',
+      name: 'New Google User',
+      idToken: 'mock_token_newgoogle@college.edu',
+      otp: otpRecord.otp
+    });
+
     assert.equal(res.status, 200);
+    assert.equal(res.body.success, true);
+    assert.ok(res.body.data.token);
+    assert.equal(res.body.data.user.email, 'newgoogle@college.edu');
+    assert.equal(res.body.data.user.college, 'Global Campus');
+  });
+
+  it('POST /api/auth/google logins existing user with mock token (requires OTP)', async () => {
+    const initRes = await request(app).post('/api/auth/google').send({
+      email: 'newgoogle@college.edu',
+      name: 'New Google User',
+      idToken: 'mock_token_newgoogle@college.edu'
+    });
+    assert.equal(initRes.status, 200);
+    assert.equal(initRes.body.requiresOTP, true);
+
+    const otpRecord = await Otp.findOne({ target: 'newgoogle@college.edu' });
+    assert.ok(otpRecord);
+
+    const res = await request(app).post('/api/auth/google').send({
+      email: 'newgoogle@college.edu',
+      name: 'New Google User',
+      idToken: 'mock_token_newgoogle@college.edu',
+      otp: otpRecord.otp
+    });
+
+    assert.equal(res.status, 200);
+    assert.equal(res.body.success, true);
     assert.ok(res.body.data.token);
   });
 
@@ -73,6 +144,13 @@ describe('UniMart API', () => {
   });
 
   it('registers seller for product tests', async () => {
+    await request(app).post('/api/auth/otp/send').send({
+      email: 'seller@college.edu',
+    });
+
+    const otpRecord = await Otp.findOne({ target: 'seller@college.edu' });
+    assert.ok(otpRecord);
+
     const res = await request(app).post('/api/auth/register').send({
       name: 'Seller User',
       email: 'seller@college.edu',
@@ -80,6 +158,7 @@ describe('UniMart API', () => {
       college: 'Test College',
       department: 'EE',
       year: '4th',
+      otp: otpRecord.otp,
     });
 
     assert.equal(res.status, 201);
@@ -170,6 +249,35 @@ describe('UniMart API', () => {
       .set('Authorization', `Bearer ${token}`);
 
     assert.equal(res.status, 200);
+  });
+
+  it('POST /api/ai/generate fails if unauthorized', async () => {
+    const res = await request(app)
+      .post('/api/ai/generate')
+      .send({
+        title: 'Dell Laptop',
+        condition: 'Good',
+        usage: '1 Year',
+        specifications: '8GB RAM, 256GB SSD',
+      });
+    assert.equal(res.status, 401);
+  });
+
+  it('POST /api/ai/generate succeeds with valid payload and token', async () => {
+    const res = await request(app)
+      .post('/api/ai/generate')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        title: 'Dell Laptop',
+        condition: 'Good',
+        usage: '1 Year',
+        specifications: '8GB RAM, 256GB SSD',
+      });
+    assert.equal(res.status, 200);
+    assert.equal(res.body.success, true);
+    assert.ok(res.body.data.description);
+    assert.ok(res.body.data.priceRange);
+    assert.equal(res.body.data.category, 'Electronics');
   });
 
   it('POST /api/auth/logout returns success', async () => {

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wishlist | UniMart</title>
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    .wishlist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="app-main">
+    <div style="margin-bottom: 32px;">
+      <h1 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em;">My Wishlist</h1>
+      <p style="color: var(--text-muted);">Keep track of items you are interested in buying</p>
+    </div>
+
+    <div id="wishlist-loading" style="text-align: center; padding: 60px 0;">
+      <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px;"></div>
+      <p style="color: var(--text-muted);">Loading your wishlisted items...</p>
+    </div>
+
+    <div id="wishlist-empty" style="text-align: center; padding: 80px 24px; display: none;" class="glass-card">
+      <span style="font-size: 3rem; margin-bottom: 16px; display: block;">❤️</span>
+      <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Your wishlist is empty</h3>
+      <p style="color: var(--text-muted); margin-bottom: 24px;">Browse the marketplace and tap the heart icon on listings you like.</p>
+      <a href="marketplace.html" class="btn btn-primary">Go to Marketplace</a>
+    </div>
+
+    <div class="wishlist-grid" id="wishlist-grid">
+      <!-- Cards populated dynamically -->
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/wishlist.js"></script>
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</body>
+</html>

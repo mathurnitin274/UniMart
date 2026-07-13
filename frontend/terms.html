@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniMart | Honor Code & Terms of Service</title>
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    .terms-container {
+      max-width: 800px;
+      margin: 40px auto 80px auto;
+      padding: 48px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .terms-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .terms-meta {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+    }
+    .terms-section {
+      margin-bottom: 40px;
+    }
+    .terms-section h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    .terms-section p, .terms-section li {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .terms-section ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    .highlight-box {
+      background: var(--background);
+      border-left: 4px solid var(--primary);
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 24px;
+    }
+    .highlight-box p {
+      margin: 0;
+      font-weight: 500;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="app-main">
+    <div class="terms-container">
+      <h1 class="terms-title">Honor Code & Terms of Service</h1>
+      <div class="terms-meta">
+        <span>Last Updated: July 2026</span>
+        <span>Version 1.2</span>
+      </div>
+
+      <!-- Section 1: Introduction -->
+      <div class="terms-section">
+        <h2>1. Agreement to Terms</h2>
+        <p>
+          Welcome to UniMart! By registering as a student and accessing or using our campus peer-to-peer marketplace, you agree to comply with and be bound by the following Terms of Service, along with our Campus Honor Code. If you do not agree to these rules, you are prohibited from using this platform.
+        </p>
+      </div>
+
+      <!-- Section 2: Honor Code -->
+      <div class="terms-section" id="honor-code">
+        <h2>2. Campus Honor Code</h2>
+        <p>
+          UniMart is built on mutual trust within our student community. Every member is expected to uphold strict academic integrity and personal ethics:
+        </p>
+        <div class="highlight-box">
+          <p>
+            "I pledge to represent my listings honestly, to respect the safety and property of my peers, and to carry out all campus transactions with transparency and respect."
+          </p>
+        </div>
+        <ul>
+          <li><strong>Honest Listings:</strong> You must describe item conditions accurately (including scratches, wear, or battery issues). Photos must be of the actual product being sold.</li>
+          <li><strong>Fair Pricing:</strong> No extreme gouging or deceptive practices. AI price suggestions are provided to help align with standard campus valuations.</li>
+          <li><strong>Meeting Commitments:</strong> If you agree to a price and meeting spot via chat, arrive on time or notify the other student in advance. Unsportsmanlike cancelations may result in flags.</li>
+        </ul>
+      </div>
+
+      <!-- Section 3: Safe Exchange & Payments -->
+      <div class="terms-section">
+        <h2>3. Transaction Safe Zones</h2>
+        <p>
+          UniMart acts solely as a listing facilitator. We do not process physical exchanges or intermediate payments:
+        </p>
+        <ul>
+          <li><strong>Safe Exchange Areas:</strong> All physical trades must occur inside verified campus zones (e.g. Canteen lobby, Central Library plaza, or Student Union courtyard). Avoid meetings in uncrowded, private off-campus spaces.</li>
+          <li><strong>Secure Payment:</strong> We recommend in-person digital transfers (e.g. UPI, card tap) or cash exchange <em>only after</em> checking and approving the product conditions in person. Advanced online bank deposits are strictly prohibited.</li>
+        </ul>
+      </div>
+
+      <!-- Section 4: Prohibited Content -->
+      <div class="terms-section">
+        <h2>4. Prohibited Items</h2>
+        <p>
+          The following list of listings is strictly banned from UniMart:
+        </p>
+        <ul>
+          <li>Alcohol, tobacco, e-cigarettes, weapons, or illegal drugs.</li>
+          <li>Academic cheating materials, homework answers, or copyright-violating course files.</li>
+          <li>Stolen campus equipment, keys, or university security items.</li>
+          <li>Counterfeit bills, credit cards, or unauthorized gift certificates.</li>
+        </ul>
+        <p>
+          Sellers of prohibited items will receive immediate suspensions and may be reported to campus student disciplinary affairs.
+        </p>
+      </div>
+
+      <!-- Section 5: Privacy Policy -->
+      <div class="terms-section">
+        <h2>5. Student Privacy & Security</h2>
+        <p>
+          We value your privacy. When registering:
+        </p>
+        <ul>
+          <li>We only collect essential details (name, university email, hostel block, phone number) to guarantee student authenticity.</li>
+          <li>Your personal phone details are kept hidden and are only exposed if you select to display them or share them in private buyer-seller chat coordinates.</li>
+          <li>We do not sell or monetize student data with third-party advertising companies.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Handle hash navigation scroll offsets
+      if (window.location.hash) {
+        setTimeout(() => {
+          const hash = window.location.hash;
+          const el = document.querySelector(hash);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      }
+    });
+  </script>
+</body>
+</html>

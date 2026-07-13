@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | UniMart</title>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <main class="app-main" style="display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 180px); padding-top: 40px; padding-bottom: 40px;">
+    <div class="glass-card" style="width: 100%; max-width: 580px; padding: 40px;">
+        <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 8px;">Join UniMart</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Connect with others in your campus marketplace</p>
+
+      <form id="register-form">
+        <div id="google-login-button-container" style="margin-bottom: 16px; display: flex; justify-content: center; width: 100%;"></div>
+
+        <div style="display: flex; align-items: center; text-align: center; margin-bottom: 16px; color: var(--text-muted); font-size: 0.85rem;">
+          <div style="flex: 1; border-bottom: 1px solid var(--border);"></div>
+          <span style="padding: 0 10px;">or</span>
+          <div style="flex: 1; border-bottom: 1px solid var(--border);"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="email" id="email" class="form-control" style="width: 100%;" placeholder="john.doe@example.com" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Min. 6 characters" minlength="6" required>
+          </div>
+          <div class="form-group">
+            <label for="college" class="form-label">College / University</label>
+            <input type="text" id="college" class="form-control" placeholder="State University" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="department" class="form-label">Department</label>
+            <input type="text" id="department" class="form-control" placeholder="Computer Science" required>
+          </div>
+          <div class="form-group">
+            <label for="year" class="form-label">Academic Year</label>
+            <select id="year" class="form-control" required>
+              <option value="" disabled selected>Select your year</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+              <option value="4th Year">4th Year</option>
+              <option value="Postgraduate">Postgraduate</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone" class="form-label">Phone Number (Optional)</label>
+            <input type="tel" id="phone" class="form-control" placeholder="+1 (555) 019-2834">
+          </div>
+          <div class="form-group">
+            <label for="profileImage" class="form-label">Profile Image (Optional)</label>
+            <input type="file" id="profileImage" class="form-control" accept="image/jpeg,image/png,image/webp" style="padding: 8px 12px;">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1rem; border-radius: var(--radius-sm); margin-bottom: 24px; margin-top: 10px;">
+          Create Account
+        </button>
+      </form>
+
+      <p style="color: var(--text-muted); font-size: 0.9rem; text-align: center;">
+        Already have an account? <a href="login.html" style="color: var(--primary); font-weight: 600; text-decoration: none;">Sign in here</a>
+      </p>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

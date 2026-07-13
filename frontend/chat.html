@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chats | UniMart</title>
+  <link rel="stylesheet" href="css/index.css">
+  <style>
+    .chat-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      height: calc(100vh - 180px);
+      margin-top: 10px;
+    }
+    .threads-pane {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .threads-header {
+      padding: 20px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      font-size: 1.15rem;
+    }
+    .thread-list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .thread-list-item:hover, .thread-list-item.active {
+      background: var(--surface-hover);
+    }
+    .thread-list-item.active {
+      border-left: 4px solid var(--primary);
+    }
+    .message-pane {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+    .chat-window-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--surface);
+      z-index: 10;
+    }
+    .messages-feed {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: var(--background);
+    }
+    .message-bubble {
+      max-width: 60%;
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      position: relative;
+    }
+    .message-bubble.incoming {
+      align-self: flex-start;
+      background: var(--surface);
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--shadow-sm);
+    }
+    .message-bubble.outgoing {
+      align-self: flex-end;
+      background: var(--primary);
+      color: white;
+      border-bottom-right-radius: 4px;
+      box-shadow: var(--primary-glow);
+    }
+    .message-time {
+      font-size: 0.72rem;
+      opacity: 0.7;
+      margin-top: 4px;
+      text-align: right;
+    }
+    .chat-input-bar {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: var(--surface);
+    }
+    /* Interactive Card Styles in Feed */
+    .chat-interactive-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 250px;
+      margin: 8px 0;
+      color: var(--text) !important;
+    }
+    .chat-interactive-card h5 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    /* Meetup spot modal layout overlay */
+    .meetup-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 550;
+      align-items: center;
+      justify-content: center;
+    }
+    @media (max-width: 768px) {
+      .chat-layout {
+        grid-template-columns: 1fr;
+      }
+      .threads-pane {
+        display: none; /* In mobile, build toggler view */
+      }
+      .threads-pane.mobile-active {
+        display: flex;
+      }
+      .message-pane.mobile-hidden {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <!-- Meetup Spot Planner Modal -->
+  <div class="meetup-modal-overlay" id="meetup-modal">
+    <div class="modal-card" style="max-width: 440px;">
+      <button style="position: absolute; top: 16px; right: 16px; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--text-muted);" id="close-meetup-modal">×</button>
+      <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 12px;">Plan Meetup Proximity</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Pick a secure, public student hub on campus to swap the item.</p>
+      
+      <div class="form-group">
+        <label for="meetup-spot-select" class="form-label">Select Secure Campus Spot</label>
+        <select id="meetup-spot-select" class="form-control">
+          <option value="Central Library Lobby">Central Library Lobby</option>
+          <option value="Student Union Building Cafe">Student Union Building Cafe</option>
+          <option value="Campus Security Main Desk">Campus Security Main Desk</option>
+          <option value="Science Block Quadrangle">Science Block Quadrangle</option>
+          <option value="College Athletic Center Reception">College Athletic Center Reception</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="meetup-time-select" class="form-label">Meetup Time</label>
+        <input type="datetime-local" id="meetup-time-select" class="form-control">
+      </div>
+
+      <button class="btn btn-primary" style="width: 100%; padding: 12px; margin-top: 10px;" id="send-meetup-plan-btn">Send Meetup Proposal</button>
+    </div>
+  </div>
+
+  <main class="app-main">
+    <div class="chat-layout">
+      <!-- Left Pane: Thread list -->
+      <aside class="threads-pane" id="threads-pane">
+        <div class="threads-header">My Inbox</div>
+        <div id="threads-loading" style="text-align: center; padding: 40px 0;">
+          <p style="color: var(--text-muted); font-size:0.9rem;">Loading messages...</p>
+        </div>
+        <div id="threads-empty" style="text-align: center; padding: 40px 16px; display: none;">
+          <span style="font-size: 2rem;">📥</span>
+          <p style="color: var(--text-muted); font-size:0.9rem; margin-top:8px;">No chats started yet.</p>
+        </div>
+        <div id="thread-list-container" style="display:flex; flex-direction:column;">
+          <!-- Threads list items injected dynamically -->
+        </div>
+      </aside>
+
+      <!-- Right Pane: Active Thread View -->
+      <section class="message-pane" id="message-pane">
+        <!-- Default State when no thread is selected -->
+        <div id="no-chat-selected" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; padding: 40px;">
+          <span style="font-size: 3rem; margin-bottom: 12px;">💬</span>
+          <h3 style="font-size: 1.25rem; font-weight: 700;">Select a Conversation</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 320px; margin-top: 8px;">Pick a student list from the inbox to negotiate details or arrange pick-ups.</p>
+        </div>
+
+        <!-- Chat Container -->
+        <div id="active-chat-container" style="display: none; flex-direction: column; height: 100%;">
+          <div class="chat-window-header">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <button class="btn btn-secondary" id="back-to-inbox-btn" style="display: none; padding: 6px 12px; font-size: 0.8rem;">&larr; Inbox</button>
+              <img id="chat-item-img" src="" alt="Item thumbnail" style="width: 40px; height: 40px; border-radius: var(--radius-sm); object-fit: cover;">
+              <div>
+                <h4 id="chat-partner-name" style="font-weight: 700; font-size: 1.05rem;">Student Name</h4>
+                <a id="chat-item-link" href="#" style="font-size: 0.82rem; color: var(--primary); font-weight: 550;">Viewing Item Details &rarr;</a>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <button id="suggest-meetup-btn" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; border-color:var(--primary); color:var(--primary);">
+                📅 Suggest Meetup
+              </button>
+              <span id="chat-item-price" style="font-size: 1.15rem; font-weight: 800; color: var(--text);">₹0</span>
+            </div>
+          </div>
+
+          <!-- Feed -->
+          <div class="messages-feed" id="messages-feed">
+            <!-- Messages go here -->
+          </div>
+
+          <!-- Input bar -->
+          <div class="chat-input-bar">
+            <input type="text" id="chat-input" class="form-control" style="flex: 1;" placeholder="Type your message here...">
+            <button id="send-msg-btn" class="btn btn-primary" style="padding: 12px 24px;">Send</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

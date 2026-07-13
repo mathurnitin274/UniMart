@@ -6,6 +6,10 @@ const {
   getProfile,
   updateProfile,
   logout,
+  googleLogin,
+  sendOtp,
+  verifyLoginOtp,
+  getGoogleClientId,
 } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 const validate = require('../middleware/validateMiddleware');
@@ -36,6 +40,12 @@ router.post(
   validate,
   login
 );
+
+router.post('/google', googleLogin);
+router.get('/google/client-id', getGoogleClientId);
+
+router.post('/otp/send', sendOtp);
+router.post('/login/verify', verifyLoginOtp);
 
 router.get('/profile', protect, getProfile);
 router.put('/profile', protect, uploadProfileImage, updateProfile);

@@ -2,8 +2,13 @@
   "name": "unimart",
   "private": true,
   "scripts": {
-    "dev": "npm run dev --prefix backend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "node serve-frontend.js",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "start": "npm start --prefix backend",
     "test": "npm test --prefix backend"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3"
   }
 }
