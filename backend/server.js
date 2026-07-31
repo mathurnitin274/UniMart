@@ -19,7 +19,10 @@ const app = express();
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5500',
+    origin: (origin, callback) => {
+      // Echo the origin back to allow any domain, supporting credentials: true
+      callback(null, true);
+    },
     credentials: true,
   })
 );
